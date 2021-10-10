@@ -85,3 +85,74 @@ The second 1's next greater number needs to search circularly, which is also 2.
     }
 }
 }
+
+=================556. Next Greater Element III=================================
+ 
+ Given a positive integer n, find the smallest integer which has exactly 
+ the same digits existing in the integer n and is greater in value than n. If no such positive integer exists, return -1.
+
+Note that the returned integer should fit in 32-bit integer, if there is a valid answer but it does not fit in 32-bit integer, return -1.
+
+ 
+
+Example 1:
+
+Input: n = 12
+ 
+ 
+ class Solution {
+    
+    // same as next permutation 
+    // time is O(n)
+    // space is O(n)
+    public int nextGreaterElement(int n) {
+        String str = String.valueOf(n);
+        
+        char[] ch = str.toCharArray();
+        
+        int i = ch.length - 2;
+        
+        while(i >= 0 && ch[i] >= ch[i + 1]){
+            i--;
+        }
+        if (i == -1){
+            return -1;
+        }
+        
+        int j = ch.length - 1;
+        
+        if (i >= 0){
+            while (i >= 0 && ch[i] >= ch[j]){
+                j--;
+            }
+        }
+        swap(ch, i, j);
+        reverse(ch, i + 1);
+        
+        if (Long.valueOf(String.valueOf(ch)) > Integer.MAX_VALUE){
+            return -1;
+        } 
+        return Integer.valueOf(String.valueOf(ch));
+        
+    }
+
+        
+    public void swap(char[] ch, int i, int j){
+        char temp = ch[i];
+        ch[i] = ch[j];
+        ch[j] = temp;
+    }
+    
+    public void reverse(char[] ch, int i){
+        int start = i;
+        int end = ch.length - 1;
+        
+        while (start <= end){
+            swap(ch, start, end);
+            start++;
+            end--;
+        }
+        
+    }
+}
+Output: 21
