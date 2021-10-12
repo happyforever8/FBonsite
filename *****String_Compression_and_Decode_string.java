@@ -50,3 +50,53 @@ Explanation: The groups are "aa", "bb", and "ccc". This compresses to "a2b2c3".
         return resultIndex;
     }
 }
+//// Decode string =================
+Input: s = "3[a]2[bc]"
+Output: "aaabcbc"
+
+ 
+ class Solution {
+    
+    // tims is o(n * maxK)
+    // n is length of String, maxK is max value of num
+    // space is o(n)
+    public String decodeString(String s) {
+        if (s == null || s.length() == 0){
+            return "";
+        }
+        Queue<Character> queue = new LinkedList<>();
+        
+        for (char ch : s.toCharArray()){
+            queue.offer(ch);
+        }
+        return helper(queue);
+        
+    }
+    
+    public String helper(Queue<Character> queue){
+        if (queue.isEmpty()){
+            return "";
+        }
+        StringBuilder sb = new StringBuilder();
+        int num = 0;
+        
+        while (!queue.isEmpty()){
+            char ch = queue.poll();
+            
+            if (ch >= '0' && ch <= '9'){
+                num = num * 10 + (ch - '0');
+            } else if (ch == '['){
+                String sub = helper(queue);
+                for (int i = 0; i < num; i++){
+                    sb.append(sub);
+                }
+                num = 0;
+            } else if (ch == ']'){
+                break;
+            } else {
+                sb.append(ch);
+            }
+        }
+        return sb.toString();
+    }
+}
