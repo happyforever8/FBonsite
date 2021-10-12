@@ -13,111 +13,65 @@ import java.util.Set;
  */
 public class TwoSum {
 
-	/**
-	 * Method to return the indices of 2 array elements that sum up to the given target value
-	 * Time complexity - O(n)
-	 * Space complexity - Best/Average of O(1) and Worst case of O(n)
-	 * 
-	 * @param array
-	 * @param target
-	 * @return
-	 */
-	public int[] findPairWithSum(int[] array, int target) {
-		int[] result = new int[2];
-		HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
-		for(int i=0; i<array.length; i++) {
-			int difference = target - array[i];
-			if(map.containsKey(array[i])) {
-				result[0] = map.get(array[i]);
-				result[1] = i;
-			} else {
-				map.put(difference, i);
-			}
-		}
-		return result;
-	}
+Question one: find all index	
+*******Find all pairs of elements in a given array that *******
+	sum to the given target number. Return all the pairs of indices.
+public List<List<Integer>> allPairs(int[] array, int target) {
+    List<List<Integer>> ans = new ArrayList<>();
 	
-	/**
-	 * Method to return all the unique pairs in a given integer array that sum up to a target value
-	 * Time complexity - O(n)
-	 * Space complexity - Best/Average of O(1) and Worst case of O(n)
-	 * 
-	 * @param array
-	 * @param target
-	 * @return
-	 */
-	public Set<Pair> findPairsWithSum(int[] array, int target) {
-		if(array == null || array.length == 0) {
-			return null;
-		}
-		Set<Pair> uniquePairs = new HashSet<Pair>();
-		Map<Integer, Integer> map = new HashMap<Integer, Integer>();
-		for(int i=0; i<array.length; i++) {
-			int difference = target - array[i];
-			if(map.containsKey(array[i])) {
-				Pair pair = new Pair(difference, array[i]);
-				uniquePairs.add(pair);
-			} else {
-				map.put(difference, array[i]);
-			}
-		}
-		return uniquePairs;
-	}
-	
-	public static void main(String args[]) {
-		int[] firstArray = {2,5,11,1,7,6,9};
-		TwoSum twoSum = new TwoSum();
-		int[] result = twoSum.findPairWithSum(firstArray, 6);
+  // key is the arr[i], value is the list of the index
+    Map<Integer, List<Integer>> hashmap = new HashMap<>();
 		
-		System.out.println(result[0] + "," + result[1]);
-		
-		int[] secondArray = {2,-5,3,1,6,4,11,0,2,4};
-		Set<Pair> uniquePairs = twoSum.findPairsWithSum(secondArray, 6);
-		Pair.printPairs(uniquePairs);
-	}
-}
+    for (int i = 0; i < array.length; i++) {
+      if (hashmap.containsKey(target - array[i])) {
+        List<Integer> list = hashmap.get(target - array[i]);
+        for (int index : list) {
+          List<Integer> pair = new ArrayList<>();
+          pair.add(index);
+          pair.add(i);
+          ans.add(pair);
+        }
+      }
+      if (hashmap.containsKey(array[i])) {
+        hashmap.get(array[i]).add(i);
+      } else {
+        List<Integer> list = new ArrayList<>();
+        list.add(i);
+        hashmap.put(array[i], list);
+      }
+    }
+    return ans;
+  }
 
-/**
- * Class to store the integer pairs
- * @author megha krishnamurthy
- *
- */
-class Pair{
-	private int first;
-	private int second;
+***************Question two, find all values pair
 	
-	/*
-	 * Overriding the constructor to maintain unique pairs
-	 * This avoids pairs like (2,4) and (4,2)
-	 */
-	Pair(int first, int second) {
-		if(first > second) {
-			this.first = second;
-			this.second = first; 
-		} else {
-			this.first = first;
-			this.second = second; 
-		}
-	}
-	
-	static void printPairs(Set<Pair> pairs) {
-		if(pairs != null && !pairs.isEmpty()) {
-			for(Pair pair : pairs) {
-				System.out.println(pair.first + "," + pair.second);
-			}
-		} else {
-			System.out.println("No input pairs");
-		}
-	}
-	
-	@Override
-	public int hashCode() {
-		return this.first + this.second;
-	}
-	
-	@Override
-	public boolean equals(Object object) {
-		Pair pair = (Pair)object;
-		return(pair.first == this.first && pair.second == this.second);
-	}
-}
+public List<List<Integer>> allPairs(int[] array, int target) {
+    Arrays.sort(array);
+    List<List<Integer>> ans = new ArrayList<>();
+    int i = 0, j = array.length - 1;
+    while (i < j) {
+      while (i > 0 && array[i] == array[i - 1] && i < j) {
+        i++;
+      }
+      while (j + 1 < array.length && array[j] == array[j + 1] && i < j) {
+        j--;
+      }
+      if (i >= j) {
+        break;
+      }
+      int sum = array[i] + array[j];
+      if (sum == target) {
+        List<Integer> pair = new ArrayList<>();
+        pair.add(array[i]);
+        pair.add(array[j]);
+        ans.add(pair);
+        i++;
+        j--;
+      } else if (sum < target) {
+        i++;
+      } else {
+        j--;
+      }
+    }
+    return ans;
+  }
