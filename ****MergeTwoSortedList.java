@@ -1,8 +1,10 @@
-mport java.util.ArrayList;
+package fb;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class MergeTwoSortedList {
+public class MergeSortedInterval {
 
 	static class Interval {
 		int start, end;
@@ -29,15 +31,15 @@ public class MergeTwoSortedList {
 				System.out.println(in.start + " , " + in.end);
 			}
 			// test with arry input
-			int[][] list3 = {{1, 2}, {3, 4}};
-
-			int[][] list4 = {{2, 3}, {5, 6}};
-
-			List<int[]> result1 = mergeTwoInterval1(list3, list4);
-
-			for (int[] in : result1) {
-				System.out.println(in[0] + " , " + in[1]);
-			}
+//			int[][] list3 = {{1, 2}, {3, 4}};
+//
+//			int[][] list4 = {{2, 3}, {5, 6}};
+//
+//			List<int[]> result1 = mergeTwoInterval1(list3, list4);
+//
+//			for (int[] in : result1) {
+//				System.out.println(in[0] + " , " + in[1]);
+//			}
 		}
 
 		public static List<Interval> mergeTwoInterval(List<Interval> list1,
