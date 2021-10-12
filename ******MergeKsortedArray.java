@@ -1,3 +1,5 @@
+// tim is o(nlogk)
+/// SPACE IS o(N)
 public class Solution {
     /**
      * @param arrays: k sorted integer arrays
