@@ -68,16 +68,18 @@ public class SimplifyPathII {
                 stack.push(directory);
             }
         }
+        
+         return "/" + String.join("/", stack);
 
         // O(Directory Size) <= O(N)
-        StringBuilder path = new StringBuilder();
-        // reverse sequential order
-        Iterator<String> itr = stack.descendingIterator();
-        while (itr.hasNext()) {
-            path.append("/");
-            path.append(itr.next());
-        }
-        return path.length() > 0 ? path.toString() : "/";
+//         StringBuilder path = new StringBuilder();
+//         // reverse sequential order
+//         Iterator<String> itr = stack.descendingIterator();
+//         while (itr.hasNext()) {
+//             path.append("/");
+//             path.append(itr.next());
+//         }
+//         return path.length() > 0 ? path.toString() : "/";
     }
 }
 ==============================71. Simplify Path====================================
