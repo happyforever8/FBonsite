@@ -125,3 +125,73 @@ public class HelloWorld{
 }
 
 ==============// path from leftTOp to rightbottom With Block*************** 
+	
+	import java.util.*;
+
+public class HelloWorld{
+
+
+      static List<List<int[]>> result = new ArrayList<>();
+     public static void findPaths(int[][] mat,   List<int[]> path, int i, int j)
+    {
+        // base case
+        if (mat == null || mat.length == 0) {
+            return;
+        }
+ 
+       
+        int M = mat.length;
+        int N = mat[0].length;
+ 
+        // if the last cell is reached, print the route
+        if (i == M - 1 && j == N - 1)
+        {
+            path.add(new int[]{i, j});
+            
+            result.add(new ArrayList<>(path));
+            path.remove(path.size() - 1);
+            return;
+        }
+ 
+        // include the current cell in the path\
+        path.add(new int[]{i, j});
+ 
+        // move right
+        if ((i >= 0 && i < M && j + 1 >= 0 && j + 1 < N) && mat[i][j] == 0) {
+            findPaths(mat, path, i, j + 1);
+        }
+ 
+        // move down
+        if ((i + 1 >= 0 && i + 1 < M && j >= 0 && j < N ) && mat[i][j] == 0) {
+            findPaths(mat, path, i + 1, j);
+        }
+ 
+        // backtrack: remove the current cell from the path
+         path.remove(path.size() - 1);
+    }
+ 
+    public static void main(String[] args)
+    {
+        int[][] mat =
+        {
+            { 0, 1, 0 },
+            { 0, 0, 0 },
+            { 0, 0, 0 }
+        };
+ 
+        //StringBuilder sb = new StringBuilder();
+        List<int[]> path = new ArrayList<>();
+        // start from `(0, 0)` cell
+        int x = 0, y = 0;
+ 
+        findPaths(mat, path, x, y);
+        System.out.println(result.size());
+        
+        for (List<int[]> list : result){
+            for (int[] step : list){
+                System.out.println(step[0] + "," + step[1]);
+            }
+            System.out.println("============");
+        }
+    }
+}
