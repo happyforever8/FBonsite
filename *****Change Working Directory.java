@@ -80,3 +80,39 @@ public class SimplifyPathII {
         return path.length() > 0 ? path.toString() : "/";
     }
 }
+==============================71. Simplify Path====================================
+class Solution {
+    
+//     Constraints:
+
+// 1 <= path.length <= 3000
+// path consists of English letters, digits, period '.', slash '/' or '_'.
+// path is a valid absolute Unix path.
+    // time is O(n)
+    // space is also O(N)
+    
+//     In a Unix-style file system, a period '.' refers to the current directory,
+//     a double period '..' refers to the directory up a level, 
+//     and any multiple consecutive slashes (i.e. '//') are treated 
+//         as a single slash '/'. For this problem, 
+//     any other format of periods such as '...' are treated as file/directory names.
+    
+    
+    public String simplifyPath(String path) {
+        if (path == null || path.length() == 0){
+            return "/";
+        }
+        Stack<String> stack = new Stack<>();
+        
+        for (String str : path.split("/")){
+            if (str.equals("..")){
+                if (!stack.isEmpty()){
+                    stack.pop();
+                }
+            } else if (str.length() > 0 && !str.equals(".")){
+                stack.push(str);
+            }
+        }
+        return "/" + String.join("/", stack);
+    }
+}
