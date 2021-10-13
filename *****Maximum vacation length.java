@@ -8,29 +8,37 @@ int findMaxVacationLength(year = [F, T, F, T, F, T, F, ], pto = 2)
 then we can get the maximum length vacation (consecutive T's).
                                              
                                              
-public int findMaxVacationLength(boolean[] days, int pto) {
+     public static void main(String []args){
+        System.out.println("Hello World");
+        
+        boolean[] days = {true, false, true, true, false, false, false, true};
+        
+        System.out.println(findMaxVacationLength(days, 2));
+     }
+     
+ public static  int findMaxVacationLength(boolean[] days, int pto) {
     int counter = 0;
     int start = 0;
+    int end = 0;
     int len = 0;
-
-    for (int end = 0; end < days.length; end++) {
+   // for (int end = 0; end < days.length; end++) {
+    while (end < days.length){
+        
       if (!days[end]) {
         counter++;
       }
-
+      end++;
       while (counter > pto) {
         if (!days[start]) {
           counter--;
         }
-
         start++;
       }
-
-      len = Math.max(len, end - start + 1);
+      len = Math.max(len, end - start);
     }
-
     return len;
-  }                                             
+  }                       
+}                                         
         
        给一字符串表示working days和holidays，再给一个pto_balance，求用掉balance可以得到的最长假期 （蠡口 咬琳零寺变体）
  
