@@ -11,9 +11,9 @@ then we can get the maximum length vacation (consecutive T's).
      public static void main(String []args){
         System.out.println("Hello World");
         
-        boolean[] days = {true, false, true, true, false, false, false, true};
+        boolean[] days = {false, true, false, true, false, true, false};
         
-        System.out.println(findMaxVacationLength(days, 2));
+        System.out.println(findMaxVacationLength(days, 2));  // return 5
      }
      
  public static  int findMaxVacationLength(boolean[] days, int pto) {
