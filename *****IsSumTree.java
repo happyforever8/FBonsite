@@ -152,3 +152,72 @@ class BinaryTree
                     + " sum property"); 
     } 
 } 
+==========================is the parent is the average of the children=====
+	
+	import java.util.*;
+
+public class HelloWorld{
+
+    static class TreeNode{
+			int value;
+			TreeNode left;
+			TreeNode right;
+			
+			public TreeNode(int value){
+				this.value = value;
+			}
+		}
+		
+	 //         5
+//	         /   \
+//	       5       5
+//	     /    \     \
+	//  4      6     5
+	    static Map<TreeNode, List<TreeNode>> map = new HashMap<>();
+		public static void main(String[] args) {
+			// TODO Auto-generated method stub
+	        TreeNode root = new TreeNode(4);
+	        
+	        root.left=new TreeNode(5);
+	        root.right=new TreeNode(5);
+	        root.left.left=new TreeNode(4);
+	        root.left.right=new TreeNode(6);
+	        root.right.right=new TreeNode(5);
+	        
+	       System.out.println( maximumAverageSubtree(root));
+		}
+	        
+	    public static  boolean maximumAverageSubtree(TreeNode root) {
+	        if (root == null){
+	        	return true;
+	        }
+	        if (root.left == null || root.right == null){
+	           return true;
+	        }
+	        int[] left = helper(root.left);
+	        int[] right = helper(root.right);
+	        
+	        if (root.value != ((left[0] + right[0])/(left[1] + right[1]))){
+	        	return false;
+	        	
+	        }
+	        boolean left1 = maximumAverageSubtree(root.left);
+	        boolean right1 = maximumAverageSubtree(root.right);
+	        
+	        return left1 && right1;
+	       
+	    }
+	    public static int[] helper(TreeNode root){
+	        if (root == null){
+	            return new int[]{0, 0};
+	        }
+	        int[] result = new int[2];
+	        int[] left = helper(root.left);
+	        int[] right = helper(root.right);
+	        
+	        result[0] = left[0] + right[0] + root.value;
+	        result[1] = left[1] + right[1] + 1;
+	        return result;
+	    }
+
+}
