@@ -221,3 +221,89 @@ public class HelloWorld{
 	    }
 
 }
+
+===================================================================================================================
+binary tree所有节点都是0或者1，每个节点是两个孩子节点的&值，一个叶子节点的值被flip（0->1 or 1->0) 给你这个节点把其他受影响的节点值更新
+===================================================================================================================
+
+import java.util.*;
+
+public class HelloWorld{
+
+		
+	 //         1
+//	         /   \
+//	       1      1
+//	     /    \     \
+	// 0      1      1
+   static class TreeNode{
+		int value;
+		TreeNode left;
+		TreeNode right;
+		
+		public TreeNode(int value){
+			this.value = value;
+		}
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+        TreeNode root = new TreeNode(1);
+        
+        root.left=new TreeNode(1);
+        root.right=new TreeNode(1);
+        root.left.left=new TreeNode(1);
+        root.left.right=new TreeNode(1);
+        root.right.right=new TreeNode(1);
+        root.right.left = new TreeNode(1);
+        
+        TreeNode node = isSumTree(root, root.right.right);
+        root.right.value = root.right.value == 1 ? 0 : 1;
+        
+        System.out.println(node.value);
+        System.out.println(node.left.value);
+        System.out.println(node.right.value);
+        System.out.println(node.left.left.value);
+        System.out.println(node.left.right.value);
+        System.out.println(node.right.left.value);
+        System.out.println(node.right.right.value);
+	}
+	public static TreeNode isSumTree(TreeNode root, TreeNode newNode){
+		if (root == null){
+			return root;
+		}
+		
+		int left = helper(root.left, newNode);
+		int right = helper(root.right, newNode);
+			
+		root.value = left & right;
+		
+// 		System.out.println(root.value + "---");
+// 		root.left = isSumTree(root.left, newNode);
+// 	    root.right = isSumTree(root.right, newNode);
+	    
+	    
+		return root;
+		
+	}
+	static boolean visited = false;
+	public  static int helper(TreeNode root, TreeNode newNode){
+		if (root == null){
+			return 1;
+		}
+
+		int left = helper(root.left, newNode);
+		int right = helper(root.right, newNode);
+		
+		if (root == newNode && !visited){
+		    root.value = newNode.value == 1 ? 0 : 1;
+		    visited = true;
+		}
+		//System.out.println("value is ----" +(left & right & root.value));
+		
+		return left & right & root.value;
+	}
+}
+
+
+
+=
