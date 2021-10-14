@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
+
+
+
+
 public class MergeSortedInterval {
 
 	static class Interval {
@@ -143,3 +148,27 @@ public class MergeSortedInterval {
 		}
 	}
 }
+
+// merge two sorted list***********
+private List<Integer> merge(List<Integer> list1, List<Integer> list2) {
+        List<Integer> res = new ArrayList<>();
+        if(list1.size() == 0) {
+            return list2;
+        }
+        if(list2.size() == 0) {
+            return list1;
+        }
+        int p1 = 0;
+        int p2 = 0;
+        while (p1 < list1.size() && p2 < list2.size()) {
+            int value = list1.get(p1) <= list2.get(p2) ? list1.get(p1++) : list2.get(p2++);
+            res.add(value);
+        }
+        while (p1 < list1.size()) {
+            res.add(list1.get(p1++));
+        }
+        while (p2 < list2.size()) {
+            res.add(list2.get(p2++));
+        }
+        return res;
+    }
